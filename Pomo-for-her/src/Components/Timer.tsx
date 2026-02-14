@@ -9,8 +9,15 @@ function timeFormat(timeInSeconds: number): string {
     return minutesUnit + ":" + secondsUnit;
 }
 
+function onStartStopClick(isPlaying:boolean, time:number) {
+    if (isPlaying) {
+        
+    }
+}
+
 const Timer = () => {
     const [workTime, setWorkTime] = useState<number>(900)
+    const [isPlaying, setIsPlaying] = useState<boolean>(false)
 
     useEffect(() => {
         if (workTime <= 0) return;
@@ -20,11 +27,17 @@ const Timer = () => {
     }, [workTime]);
 
     return (
-        <div className="flex flex-col px-4 py-2 bg-violet-950 rounded-xl">
+        <div className="flex flex-col gap-6 px-4 py-4 bg-violet-950 rounded-xl">
             <Options></Options>
-            <h1 className="font-mono text-3xl text-white">
+            <h1 className="font-mono text-9xl text-white self-center">
                 {workTime > 0 ? timeFormat(workTime) : "Tempo Esgotado!"}
             </h1>
+            <button 
+            type="button"
+            onClick={() =>{ setIsPlaying(!isPlaying)}}
+            className="text-2xl text-white bg-violet-500 rounded-lg font-medium py-2">
+                {isPlaying ? "Stop" : "Start"}
+            </button>
         </div>
     )
 }
