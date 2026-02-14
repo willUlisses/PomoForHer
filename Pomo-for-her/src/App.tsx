@@ -1,11 +1,11 @@
 import './App.css'
-import Options from "./Components/Options"
+import Timer from './Components/Timer'
 
 function App() {
 
   return (
     <main className='bg-violet-400 h-screen flex items-center justify-center'>
-      <Options></Options>
+      <Timer></Timer>
     </main>
   )
 }

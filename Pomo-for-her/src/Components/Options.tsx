@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 
-
 const Options = () => {
     const [activeOption, setActiveOption] = useState<string>("15/2")
 
