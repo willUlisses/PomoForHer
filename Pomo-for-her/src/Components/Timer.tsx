@@ -7,7 +7,7 @@ function timeFormat(timeInSeconds: number): string {
     const minutesUnit: number = Math.floor(timeInSeconds / 60);
     const secondsUnit: number = Math.floor(timeInSeconds % 60);
 
-    return `${minutesUnit}:${secondsUnit.toString().padStart(2, "0")}`;
+    return `${minutesUnit.toString().padStart(2, "0")}:${secondsUnit.toString().padStart(2, "0")}`;
 }
 
 const Timer = () => {
@@ -38,18 +38,18 @@ const Timer = () => {
     }, [workTime, isPlaying]);
 
     return (
-        <div className="flex flex-col gap-6 px-4 py-4 bg-violet-950 rounded-xl shadow-2xl">
-            <Options activeOption={activeOption} onOptionSelect={handleOptionSwitch}></Options>
-            <h1 className="font-extrabold tracking-wider text-9xl text-white self-center text-shadow-lg my-10">
-                {workTime > 0 ? timeFormat(workTime) : "Tempo Esgotado!"}
-            </h1>
-            <button 
-            type="button"
-            onClick={() =>{ setIsPlaying(!isPlaying)}}
-            className="text-2xl text-white bg-violet-500 rounded-lg font-medium py-2 active:scale-98">
-                {isPlaying ? "Stop" : "Start"}
-            </button>
-        </div>
+            <div className="flex flex-col gap-6 px-4 py-4 bg-violet-950 rounded-xl shadow-2xl text-white">
+                <Options activeOption={activeOption} onOptionSelect={handleOptionSwitch}></Options>
+                <h1 className="font-extrabold tracking-wider text-9xl self-center text-shadow-lg my-10">
+                    {timeFormat(workTime)}
+                </h1>
+                <button 
+                type="button"
+                onClick={() =>{ setIsPlaying(!isPlaying)}}
+                className="text-2xl bg-violet-500 rounded-lg font-medium py-2 active:scale-98">
+                    {isPlaying ? "Stop" : "Start"}
+                </button>
+            </div>
     )
 }
 
