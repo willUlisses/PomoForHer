@@ -1,20 +1,20 @@
-import { useState } from "react";
+interface OptionsProps {
+    activeOption: string,
+    onOptionSelect: (option: string) => void
+}
 
-
-const Options = () => {
-    const [activeOption, setActiveOption] = useState<string>("25/5")
-
+const Options = ({activeOption, onOptionSelect} : OptionsProps) => {
     const options = ["25/5", "50/10", "100/20"];
 
     return (
-       <ul className="w-fit text-2xl grid grid-cols-3 text-white font-medium bg-violet-900 overflow-hidden rounded-xl divide-zinc-100 shadow-2xl">
+       <ul className="w-fit text-2xl font-bold tracking-wider grid grid-cols-3 text-white bg-violet-900 overflow-hidden rounded-xl divide-zinc-100 shadow-2xl">
             {
                 options.map((timeOption) => {
                     const isActive = (activeOption === timeOption);
                     return (
                         <li 
                         key={timeOption}
-                        onClick={() => {setActiveOption(timeOption)}}
+                        onClick={() => {onOptionSelect(timeOption)}}
                         className={`
                         px-10 py-3 cursor-pointer transition-all duration-200
                         ${isActive ? 'bg-violet-600' : 'hover:bg-white/5'}

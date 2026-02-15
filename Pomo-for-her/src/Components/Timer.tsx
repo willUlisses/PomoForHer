@@ -2,31 +2,45 @@ import { useEffect, useState } from "react";
 import Options from "./Options";
 
 
+
 function timeFormat(timeInSeconds: number): string {
     const minutesUnit: number = Math.floor(timeInSeconds / 60);
     const secondsUnit: number = Math.floor(timeInSeconds % 60);
-    
-    return minutesUnit + ":" + secondsUnit;
+
+    return `${minutesUnit}:${secondsUnit.toString().padStart(2, "0")}`;
 }
 
 const Timer = () => {
-    const [workTime, setWorkTime] = useState<number>(900)
+    const [activeOption, setActiveOption] = useState<string>("25/5")
+    const [workTime, setWorkTime] = useState<number>(1500)
     const [isPlaying, setIsPlaying] = useState<boolean>(false)
 
+    const handleOptionSwitch = (option: string) => {
+        setActiveOption(option);
+        setIsPlaying(false);
+
+        const [minuteString] = option.split("/"); // pego o tempo em minutos total
+        const timeInSeconds = parseInt(minuteString) * 60; // transformo o tempo de minutos pro total dele em segundos
+
+        setWorkTime(timeInSeconds); // mudo o worktime pro tempo total em segundos e depois ele lida com a formatação
+    }
+
     useEffect(() => {
-        if (workTime <= 0) return;
+        if (workTime <= 0) {
+            setIsPlaying(false);
+            return
+        };
         
         if (isPlaying) {
             const timeDecreaseInterval = setInterval(() => {setWorkTime(tempoAtual => tempoAtual - 1)}, 1000)
             return () => clearInterval(timeDecreaseInterval);
         } 
-        return;
     }, [workTime, isPlaying]);
 
     return (
         <div className="flex flex-col gap-6 px-4 py-4 bg-violet-950 rounded-xl shadow-2xl">
-            <Options></Options>
-            <h1 className="font-mono text-9xl text-white self-center text-shadow-lg">
+            <Options activeOption={activeOption} onOptionSelect={handleOptionSwitch}></Options>
+            <h1 className="font-extrabold tracking-wider text-9xl text-white self-center text-shadow-lg my-10">
                 {workTime > 0 ? timeFormat(workTime) : "Tempo Esgotado!"}
             </h1>
             <button 
