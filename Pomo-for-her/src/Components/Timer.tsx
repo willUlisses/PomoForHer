@@ -41,7 +41,7 @@ const Timer = () => {
             const timeDecreaseInterval = setInterval(() => {setTimeLeft(tempoAtual => tempoAtual - 1)}, 1000)
             return () => clearInterval(timeDecreaseInterval);
         } 
-    }, [timeLeft, isPlaying, isRestTimeOn]);
+    }, [timeLeft, isPlaying]);
 
     return (
             <div className="flex flex-col gap-6 px-4 py-4 bg-violet-950 rounded-xl shadow-2xl text-white">
