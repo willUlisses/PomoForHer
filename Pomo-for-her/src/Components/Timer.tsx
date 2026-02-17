@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Options from "./Options";
-
+import RestToast from "./RestToast";
 
 type TimerMode = "WORK" | "REST";
 
@@ -24,6 +24,7 @@ const Timer = () => {
     const [timeLeft, setTimeLeft] = useState<number>(2);
     const [timeMode, setTimeMode] = useState<TimerMode>("WORK");
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
+    const [showToast, setShowToast] = useState<boolean>(false);
 
 
     const handleMinutesOptionSwitch = (option: string) => {
@@ -42,7 +43,10 @@ const Timer = () => {
         if (timeMode === "WORK") {
             setTimeMode("REST");
             setTimeLeft(durations.rest);
-            
+            setShowToast(true);
+
+            const toastTimer = setTimeout(() => setShowToast(false), 5000);
+            return () => clearTimeout(toastTimer);
         } else {
             setTimeMode("WORK");
             setTimeLeft(durations.work);
@@ -69,7 +73,12 @@ const Timer = () => {
     const isWorkModeOn = (timeMode === "WORK");
 
     return (
-            <div className="flex flex-col gap-6 px-4 py-4 bg-violet-950 rounded-xl shadow-2xl text-white">
+            <div className="relative flex flex-col gap-6 px-4 py-4 bg-violet-950 rounded-xl shadow-2xl text-white">
+
+                <RestToast visible={showToast}>
+                    <span>🎉</span>
+                    <span>Hora do descanso! <strong>Tome Água 💧.</strong></span>
+                </RestToast>
 
                 <Options activeOption={activeOption} onOptionSelect={handleMinutesOptionSwitch}></Options>
 
