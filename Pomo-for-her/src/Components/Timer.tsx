@@ -74,11 +74,11 @@ const Timer = () => {
 
     return (
             <div className="relative flex flex-col gap-4 md:gap-6 px-4 py-6 md:p-8 
-            bg-violet-950 rounded-xl shadow-2xl text-white w-full max-w-[95vw]">
+            bg-violet-950 rounded-xl shadow-2xl text-white w-full md:w-fit md:py-4 lg:p-10 max-w-[95vw]">
 
                 <RestToast visible={showToast}>
                     <span>🎉</span>
-                    <span>Hora do descanso! <strong>Tome Água 💧.</strong></span>
+                    <span>Hora do descanso! <strong>Tome Água 😁💧.</strong></span>
                 </RestToast>
                 
                 <div className="flex justify-center">

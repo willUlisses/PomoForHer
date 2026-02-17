@@ -18,7 +18,7 @@ const Options = ({activeOption, onOptionSelect} : OptionsProps) => {
                         key={timeOption}
                         onClick={() => {onOptionSelect(timeOption)}}
                         className={`
-                        px-10 py-3 cursor-pointer transition-all duration-200
+                        px-10 py-3 cursor-pointer transition-all duration-200 text-center
                         ${isActive ? 'bg-violet-600' : 'hover:bg-white/5'}
                         `}
                         >
