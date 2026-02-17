@@ -73,21 +73,25 @@ const Timer = () => {
     const isWorkModeOn = (timeMode === "WORK");
 
     return (
-            <div className="relative flex flex-col gap-6 px-4 py-4 bg-violet-950 rounded-xl shadow-2xl text-white">
+            <div className="relative flex flex-col gap-4 md:gap-6 px-4 py-6 md:p-8 
+            bg-violet-950 rounded-xl shadow-2xl text-white w-full max-w-[95vw]">
 
                 <RestToast visible={showToast}>
                     <span>🎉</span>
                     <span>Hora do descanso! <strong>Tome Água 💧.</strong></span>
                 </RestToast>
-
-                <Options activeOption={activeOption} onOptionSelect={handleMinutesOptionSwitch}></Options>
+                
+                <div className="flex justify-center">
+                    <Options activeOption={activeOption} onOptionSelect={handleMinutesOptionSwitch}></Options>
+                </div>
 
                 <div className="text-center">
-                    <p className="text-zinc-400 text-xl font-bold tracking-widest my-5">
+                    <p className="text-zinc-400 text-base md:text-2xl font-bold tracking-widest my-2 md:my-5">
                         {isWorkModeOn ? 'STUDY TIME' : 'BREAK TIME'}
                     </p>
 
-                    <h1 className="font-extrabold tracking-wider text-9xl self-center text-shadow-lg my-5">
+                    <h1 className="font-extrabold tracking-wider text-7xl sm:text-8xl md:text-9xl 
+                    self-center text-shadow-lg my-2 md:my-5">
                         {timeFormat(timeLeft)}
                     </h1>
                 </div>
@@ -95,7 +99,8 @@ const Timer = () => {
                 <button 
                 type="button"
                 onClick={() => setIsPlaying(!isPlaying)}
-                className={`text-xl text-white bg-violet-500 rounded-lg font-bold py-3 px-8 w-full active:scale-95 transition-all shadow-lg hover:brightness-110`}
+                className={`text-lg md:text-xl text-white bg-violet-500 rounded-lg font-bold 
+                py-3 px-7 md:px-8 w-full active:scale-95 transition-all shadow-lg hover:brightness-110`}
             >
                 {isPlaying ? "PAUSAR" :  "INICIAR"}
             </button>
