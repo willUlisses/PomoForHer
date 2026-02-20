@@ -21,7 +21,7 @@ function takeTimeFromOptionString(option: string, index: number): number {
 const Timer = () => {
     const [activeOption, setActiveOption] = useState<string>("25/5");
     const [durations, setDurations] = useState({work: 1500, rest: 300})
-    const [timeLeft, setTimeLeft] = useState<number>(2);
+    const [timeLeft, setTimeLeft] = useState<number>(1500);
     const [timeMode, setTimeMode] = useState<TimerMode>("WORK");
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
     const [showToast, setShowToast] = useState<boolean>(false);
