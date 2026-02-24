@@ -21,7 +21,7 @@ function takeTimeFromOptionString(option: string, index: number): number {
 const Timer = () => {
     const [activeOption, setActiveOption] = useState<string>("25/5");
     const [durations, setDurations] = useState({work: 1500, rest: 300})
-    const [timeLeft, setTimeLeft] = useState<number>(1500);
+    const [timeLeft, setTimeLeft] = useState<number>(durations.work);
     const [timeMode, setTimeMode] = useState<TimerMode>("WORK");
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
     const [showToast, setShowToast] = useState<boolean>(false);
@@ -39,21 +39,6 @@ const Timer = () => {
         setTimeLeft(workTimeInSeconds); // mudo o timeLeft pro tempo total em segundos e depois ele lida com a formatação
     }
 
-    function switchTimeMode() {
-        if (timeMode === "WORK") {
-            setTimeMode("REST");
-            setTimeLeft(durations.rest);
-            setShowToast(true);
-
-            const toastTimer = setTimeout(() => setShowToast(false), 5000);
-            return () => clearTimeout(toastTimer);
-        } else {
-            setTimeMode("WORK");
-            setTimeLeft(durations.work);
-            setIsPlaying(false);
-        }
-    }
-
     useEffect(() => {
         let intervalId: number;
         if (isPlaying && timeLeft > 0) {
@@ -64,19 +49,35 @@ const Timer = () => {
                 const timeRemaining: number = Math.round((endTime - now) / 1000);
 
                 if (timeRemaining <= 0) {
-                    setTimeLeft(0);
                     clearInterval(intervalId);
-                } else {
+                    setTimeMode((currentMode) => {
+                        const nextMode  = (currentMode === "WORK" ? "REST": "WORK");
+                        if (nextMode === "REST") {
+                            setTimeLeft(durations.rest);
+                            setIsPlaying(true);
+                            setShowToast(true);
+                        } else {
+                            setTimeLeft(durations.work);
+                            setIsPlaying(false);
+                            setShowToast(false);
+                        }
+
+                        return nextMode;
+                    })
+                } 
+                else {
                     setTimeLeft(timeRemaining);
-                }
-            }, 500);
-        }
-        else if (timeLeft === 0 && isPlaying) {
-            switchTimeMode();
+                }}, 500);
         }
         return () => clearInterval(intervalId);
-        } , [isPlaying, timeMode, durations]);
+    }, [isPlaying, durations]);
 
+    useEffect(() => {
+    if (showToast) {
+        const timeout = setTimeout(() => setShowToast(false), 5000);
+        return () => clearTimeout(timeout);
+    }
+    }, [showToast]);
 
     const isWorkModeOn = (timeMode === "WORK");
 
