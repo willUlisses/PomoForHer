@@ -56,18 +56,26 @@ const Timer = () => {
 
     useEffect(() => {
         let intervalId: number;
-
         if (isPlaying && timeLeft > 0) {
+            const endTime = Date.now() + timeLeft * 1000;
+
             intervalId = setInterval(() => {
-                setTimeLeft((tempoAtual) => tempoAtual - 1);
-            }, 1000);
+                const now: number = Date.now();
+                const timeRemaining: number = Math.round((endTime - now) / 1000);
+
+                if (timeRemaining <= 0) {
+                    setTimeLeft(0);
+                    clearInterval(intervalId);
+                } else {
+                    setTimeLeft(timeRemaining);
+                }
+            }, 500);
         }
         else if (timeLeft === 0 && isPlaying) {
             switchTimeMode();
         }
-
         return () => clearInterval(intervalId);
-        } , [timeLeft, isPlaying, timeMode, durations]);
+        } , [isPlaying, timeMode, durations]);
 
 
     const isWorkModeOn = (timeMode === "WORK");
